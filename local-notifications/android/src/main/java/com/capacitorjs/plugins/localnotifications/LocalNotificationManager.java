@@ -258,7 +258,7 @@ public class LocalNotificationManager {
             context,
             localNotification.getId(),
             intent,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT
         );
         mBuilder.setContentIntent(pendingIntent);
 
@@ -273,7 +273,7 @@ public class LocalNotificationManager {
                     context,
                     localNotification.getId() + notificationAction.getId().hashCode(),
                     actionIntent,
-                    PendingIntent.FLAG_CANCEL_CURRENT
+                    PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT
                 );
                 NotificationCompat.Action.Builder actionBuilder = new NotificationCompat.Action.Builder(
                     R.drawable.ic_transparent,
@@ -334,7 +334,7 @@ public class LocalNotificationManager {
             context,
             request.getId(),
             notificationIntent,
-            PendingIntent.FLAG_CANCEL_CURRENT
+            PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT
         );
 
         // Schedule at specific time (with repeating support)
@@ -373,7 +373,7 @@ public class LocalNotificationManager {
         if (on != null) {
             long trigger = on.nextTrigger(new Date());
             notificationIntent.putExtra(TimedNotificationPublisher.CRON_KEY, on.toMatchString());
-            pendingIntent = PendingIntent.getBroadcast(context, request.getId(), notificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+            pendingIntent = PendingIntent.getBroadcast(context, request.getId(), notificationIntent, PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_CANCEL_CURRENT);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && schedule.allowWhileIdle()) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC, trigger, pendingIntent);
             } else {
