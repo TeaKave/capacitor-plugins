@@ -295,7 +295,7 @@ public class LocalNotificationManager {
         dissmissIntent.putExtra(ACTION_INTENT_KEY, "dismiss");
         LocalNotificationSchedule schedule = localNotification.getSchedule();
         dissmissIntent.putExtra(NOTIFICATION_IS_REMOVABLE_KEY, schedule == null || schedule.isRemovable());
-        PendingIntent deleteIntent = PendingIntent.getBroadcast(context, localNotification.getId(), dissmissIntent, 0);
+        PendingIntent deleteIntent = PendingIntent.getBroadcast(context, localNotification.getId(), dissmissIntent, PendingIntent.FLAG_IMMUTABLE);
         mBuilder.setDeleteIntent(deleteIntent);
     }
 
@@ -399,7 +399,7 @@ public class LocalNotificationManager {
 
     private void cancelTimerForNotification(Integer notificationId) {
         Intent intent = new Intent(context, TimedNotificationPublisher.class);
-        PendingIntent pi = PendingIntent.getBroadcast(context, notificationId, intent, 0);
+        PendingIntent pi = PendingIntent.getBroadcast(context, notificationId, intent, PendingIntent.FLAG_IMMUTABLE);
         if (pi != null) {
             AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             alarmManager.cancel(pi);
