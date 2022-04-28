@@ -78,13 +78,17 @@ public class PushNotificationsPlugin extends Plugin {
         FirebaseMessaging.getInstance().setAutoInitEnabled(true);
         FirebaseMessaging.getInstance().getToken()
                 .addOnCompleteListener(task -> {
-                    if (task.isSuccessful() && task.getResult() != null) {
-                        sendToken(task.getResult());
-                    } else {
-                        boolean isResultNull = task.getResult() == null;
-                        sendError("Firebase getToken failed: isSuccessful" + task.isSuccessful() + ", result is null: " + isResultNull);
-                    }
-                })
+                        try {
+                            if (task.isSuccessful() && task.getResult() != null) {
+                                sendToken(task.getResult());
+                            } else {
+                                boolean isResultNull = task.getResult() == null;
+                                sendError("Firebase getToken failed: isSuccessful" + task.isSuccessful() + ", result is null: " + isResultNull);
+                            }
+                        } catch (Exception exception) {
+                            call.reject("Can not init firebase messaging service " + exception.getMessage());
+                        }
+                    })
                 .addOnFailureListener(task -> sendError(task.getLocalizedMessage()));
         call.resolve();
     }
