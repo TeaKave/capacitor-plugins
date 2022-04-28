@@ -241,3 +241,4 @@ public class PushNotificationsPlugin extends Plugin {
         return null;
     }
 }
+
