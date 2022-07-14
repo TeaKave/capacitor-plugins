@@ -17,6 +17,8 @@ import java.util.List;
 
 public class NotificationChannelManager {
 
+    public static final String FOREGROUND_NOTIFICATION_CHANNEL_ID = "PushDefaultForeground";
+
     private Context context;
     private NotificationManager notificationManager;
 
