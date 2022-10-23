@@ -34,6 +34,7 @@ import org.json.JSONObject;
 /**
  * Contains implementations for all notification actions
  */
+
 public class LocalNotificationManager {
 
     private static final String CONFIG_KEY_PREFIX = "plugins.LocalNotifications.";
